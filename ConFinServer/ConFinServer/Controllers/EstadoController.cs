@@ -25,5 +25,18 @@ namespace ConFinServer.Controllers
             valor = valor + "- BSN 2";
             return valor;
         }
+
+         [HttpGet("Lista")]
+         public List<Estado> GetLista()
+         {
+             return lista;
+         }
+        
+         [HttpPost]
+         public string PostEstado(Estado estado)
+         {
+             lista.Add(estado);
+             return "Estado cadastrado com sucesso";
+         }
     }
 }
