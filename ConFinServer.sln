@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConFinServer", "ConFinServer\ConFinServer.csproj", "{AB51AACB-C785-429E-A4FB-B712F3085872}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AB51AACB-C785-429E-A4FB-B712F3085872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB51AACB-C785-429E-A4FB-B712F3085872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB51AACB-C785-429E-A4FB-B712F3085872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB51AACB-C785-429E-A4FB-B712F3085872}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD7181AB-70CD-4000-99E9-A40F3B361830}
+	EndGlobalSection
+EndGlobal
