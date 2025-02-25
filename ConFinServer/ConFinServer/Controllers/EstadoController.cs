@@ -38,5 +38,35 @@ namespace ConFinServer.Controllers
              lista.Add(estado);
              return "Estado cadastrado com sucesso";
          }
+
+           [HttpPut]
+          public string PutEstado(Estado estado)
+          {
+              var estadoExiste = lista.Where(l => l.Sigla == estado.Sigla).FirstOrDefault();
+              if (estadoExiste != null)
+              {
+                  estadoExiste.Sigla = estado.Sigla;
+                  estadoExiste.Nome = estado.Nome;
+              }
+              else {
+                  return "Estado não encontrado";
+              }
+              return "Estado alterado com sucesso";
+          }
+        
+          [HttpDelete]
+          public string DeleteEstado(string sigla)
+          {
+              var estadoExiste = lista.Where(l => l.Sigla == sigla).FirstOrDefault();
+              if (estadoExiste != null)
+              {
+                  lista.Remove(estadoExiste);
+              }
+              else
+              {
+                  return "Estado não encontrado";
+              }
+              return "Estado excluido com sucesso";
+          }
     }
 }
