@@ -1,4 +1,5 @@
-﻿using ConFinServer.Model;
+﻿using ConFinServer.Data;
+using ConFinServer.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,50 +9,93 @@ namespace ConFinServer.Controllers
     [ApiController]
     public class CidadeController : ControllerBase
     {
+        private readonly AppDbContext _context;
+
+        public CidadeController(AppDbContext context)
+        {
+            _context = context;
+        }
+        
         private static List<Cidade> lista = new List<Cidade>();
 
+
+
         [HttpGet]
-        public List<Cidade> GetCidade()
+        public IActionResult GetCidade()
         {
-            return lista;
+            try
+            {
+                var lista = _context.Cidade.OrderBy(e => e.Nome).ToList();
+                //select * from estado
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao consultar cidade" + ex.Message);
+            }
         }
 
         [HttpPost]
-        public string PostCidade([FromBody] Cidade cidade)
+        public IActionResult PostCidade(Cidade cidade)
         {
-            lista.Add(cidade);
-            return "Cidade casdastrada com sucesso";
+            try
+            {
+                _context.Cidade.Add(cidade);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Erro ao incluir cidade" + ex.Message);
+            }
+
+            return Ok("Cidade cadastrada com sucesso");
         }
 
         [HttpPut]
-        public string PutCidade([FromBody] Cidade cidade)
+        public IActionResult PutCidade(Cidade cidade)
         {
-            var cidadeExiste =  lista.Where(l => l.Codigo == cidade.Codigo).FirstOrDefault();
-            if (cidadeExiste!= null)
+            try
             {
-                cidadeExiste.Nome = cidade.Nome;
-                cidadeExiste.Estado = cidade.Estado;
-                return "Cidade alterada com sucesso!";
+                var cidadeExiste =  _context.Cidade.Where(l => l.Codigo == cidade.Codigo).FirstOrDefault();
+                if (cidadeExiste!= null)
+                {
+                    cidadeExiste.Nome = cidade.Nome;
+                    _context.Cidade.Update(cidadeExiste);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    return NotFound("Cidade não encontrada");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return "Cidade não encontrada";
+                return BadRequest("Erro ao alterar a cidade" + ex.Message);
             }
-        }
+            return Ok("Cidade alterada com sucesso!");
+        }                                                                                                                                                                                                                                                                        
 
         [HttpDelete("{codigo}")]
-        public string DeleteCidade([FromRoute] int codigo)
+        public IActionResult DeleteCidade([FromBody] Cidade cidade)
         {
-            var cidadeExiste = lista.Where(l => l.Codigo == codigo).FirstOrDefault();
-            if (cidadeExiste != null)
+            try
             {
-                lista.Remove(cidadeExiste);
-                return "Cidade excluida com sucesso";
+                var cidadeExiste = _context.Cidade.Where(l => l.Codigo == cidade.Codigo).FirstOrDefault();
+                if (cidadeExiste != null)
+                {
+                    _context.Cidade.Remove(cidadeExiste);
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    return NotFound("Cidade não encontrado");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return "Cidade não encontrada";
+                return BadRequest("Erro ao excluir cidade" + ex.Message);
             }
+            return Ok("Cidade excluido com sucesso");
         }
     }
 }
